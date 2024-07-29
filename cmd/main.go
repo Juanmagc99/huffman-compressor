@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 
 	"github.com.Juanmagc99.huffman-compressor/internal/utils"
@@ -9,11 +8,12 @@ import (
 
 func main() {
 
-	filePath := "data/lorem_daa.txt"
-	_, err := os.Open(filePath)
+	filePath := "internal/testdata/lorem_data.txt"
+	f, err := os.Open(filePath)
 
 	utils.CheckError("Something", err)
+	defer f.Close()
 
-	fmt.Println("Hola mundo!")
+	utils.TextToMap(f)
 
 }
