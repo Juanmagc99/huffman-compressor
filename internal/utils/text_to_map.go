@@ -6,7 +6,8 @@ import (
 )
 
 /*
-This function receive the param to some
+This function receive a txt file and return a map with its runes
+and the number of time it appears
 */
 func TextToMap(file *os.File) map[rune]int {
 
