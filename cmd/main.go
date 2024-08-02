@@ -5,6 +5,7 @@ import (
 	"os"
 	"path"
 
+	"github.com.Juanmagc99.huffman-compressor/internal/tree"
 	"github.com.Juanmagc99.huffman-compressor/internal/utils"
 )
 
@@ -22,6 +23,17 @@ func main() {
 	utils.CheckError("Something went wrong during file open", err)
 	defer f.Close()
 
-	utils.TextToMap(f)
+	//pl := utils.TextToPairs(f)
+
+	/*for _, p := range pl {
+		fmt.Printf("The character %c appears %d times\n", p.Key, p.Value)
+	}*/
+
+	leafA := tree.LeafNode{'a', 5}
+	leafB := tree.LeafNode{'b', 7}
+	inter := tree.InternalNode{leafA, leafB, 12}
+	inter2 := tree.InternalNode{leafA, inter, 17}
+
+	fmt.Println(inter2)
 
 }
