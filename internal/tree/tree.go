@@ -16,27 +16,12 @@ type InternalNode struct {
 	RepNumber int
 }
 
-func NewLeafNode(char rune, rn int) *LeafNode {
-	return &LeafNode{
-		Character: char,
-		RepNumber: rn,
-	}
-}
-
 func (n LeafNode) IsLeaf() bool {
 	return true
 }
 
 func (n LeafNode) Weight() int {
 	return n.RepNumber
-}
-
-func NewInternalNode(left, right BaseNode, rn int) *InternalNode {
-	return &InternalNode{
-		LeftNode:  left,
-		RightNode: right,
-		RepNumber: rn,
-	}
 }
 
 func (n InternalNode) IsLeaf() bool {
