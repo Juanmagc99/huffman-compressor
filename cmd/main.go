@@ -5,7 +5,6 @@ import (
 	"os"
 	"path"
 
-	"github.com.Juanmagc99.huffman-compressor/internal/tree"
 	"github.com.Juanmagc99.huffman-compressor/internal/utils"
 )
 
@@ -25,17 +24,6 @@ func main() {
 
 	leaf_list := utils.TextToLeafs(f)
 
-	huff_tree := tree.CreateHuffmanTree(leaf_list)
-
-	/*for _, p := range pl {
-		fmt.Printf("The character %c appears %d times\n", p.Key, p.Value)
-	}
-
-	leafA := tree.LeafNode{Character: 'a', RepNumber: 5}
-	leafB := tree.LeafNode{Character: 'b', RepNumber: 7}
-	inter := tree.InternalNode{leafA, leafB, 12}
-	inter2 := tree.InternalNode{leafA, inter, 17}
-
-	fmt.Println(inter2)*/
+	fmt.Println(leaf_list)
 
 }

@@ -29,10 +29,10 @@ func TextToLeafs(file *os.File) LeafList {
 		CheckError("Some problems scanning the file", err)
 	}
 
-	ll := make(LeafList, len(cm))
+	var ll LeafList
 
 	for k, v := range cm {
-		ll = append(ll, tree.LeafNode{k, v})
+		ll = append(ll, tree.LeafNode{Character: k, RepNumber: v})
 	}
 
 	sort.Slice(ll, func(i, j int) bool {
