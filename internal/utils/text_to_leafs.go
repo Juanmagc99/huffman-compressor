@@ -12,7 +12,7 @@ import (
 This function receive a txt file and return a list of leaf with its runes
 and their frecuency
 */
-func TextToLeafs(file *os.File) tree.LeafList {
+func TextToLeafs(file *os.File) tree.NodeList {
 
 	scanner := bufio.NewScanner(file)
 	scanner.Split(bufio.ScanRunes)
@@ -27,15 +27,15 @@ func TextToLeafs(file *os.File) tree.LeafList {
 		CheckError("Some problems scanning the file", err)
 	}
 
-	var ll tree.LeafList
+	var nl tree.NodeList
 
 	for k, v := range cm {
-		ll = append(ll, tree.LeafNode{Character: k, RepNumber: v})
+		nl = append(nl, tree.LeafNode{Character: k, RepNumber: v})
 	}
 
-	sort.Slice(ll, func(i, j int) bool {
-		return ll[i].RepNumber < ll[j].RepNumber
+	sort.Slice(nl, func(i, j int) bool {
+		return nl[i].(tree.LeafNode).RepNumber < nl[j].(tree.LeafNode).RepNumber
 	})
 
-	return ll
+	return nl
 }
