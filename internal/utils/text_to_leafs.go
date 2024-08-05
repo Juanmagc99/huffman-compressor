@@ -8,13 +8,11 @@ import (
 	"github.com.Juanmagc99.huffman-compressor/internal/tree"
 )
 
-type LeafList []tree.LeafNode
-
 /*
 This function receive a txt file and return a list of leaf with its runes
 and their frecuency
 */
-func TextToLeafs(file *os.File) LeafList {
+func TextToLeafs(file *os.File) tree.LeafList {
 
 	scanner := bufio.NewScanner(file)
 	scanner.Split(bufio.ScanRunes)
@@ -29,7 +27,7 @@ func TextToLeafs(file *os.File) LeafList {
 		CheckError("Some problems scanning the file", err)
 	}
 
-	var ll LeafList
+	var ll tree.LeafList
 
 	for k, v := range cm {
 		ll = append(ll, tree.LeafNode{Character: k, RepNumber: v})

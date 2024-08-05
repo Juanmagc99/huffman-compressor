@@ -16,6 +16,19 @@ type InternalNode struct {
 	RepNumber int
 }
 
+type LeafList []LeafNode
+
+func (ll *LeafList) PopFirst() (BaseNode, bool) {
+	if len(*ll) == 0 {
+		return nil, false
+	} else {
+		index := len(*ll)
+		node := (*ll)[0]
+		*ll = (*ll)[1:index]
+		return node, true
+	}
+}
+
 func (n LeafNode) IsLeaf() bool {
 	return true
 }

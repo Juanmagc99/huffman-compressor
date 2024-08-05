@@ -5,6 +5,7 @@ import (
 	"os"
 	"path"
 
+	"github.com.Juanmagc99.huffman-compressor/internal/tree"
 	"github.com.Juanmagc99.huffman-compressor/internal/utils"
 )
 
@@ -22,8 +23,8 @@ func main() {
 	utils.CheckError("Something went wrong during file open", err)
 	defer f.Close()
 
-	leaf_list := utils.TextToLeafs(f)
+	leafList := utils.TextToLeafs(f)
 
-	fmt.Println(leaf_list)
+	tree.CreateHuffmanTree(&leafList)
 
 }
