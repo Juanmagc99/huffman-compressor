@@ -11,7 +11,7 @@ import (
 
 func main() {
 
-	filePath := "internal/testdata/lorem_data.txt"
+	filePath := "internal/testdata/test.txt"
 
 	if ext := path.Ext(filePath); ext != ".txt" {
 		err := fmt.Errorf("program expects a .txt file extension not %s", ext)
@@ -23,8 +23,15 @@ func main() {
 	utils.CheckError("Something went wrong during file open", err)
 	defer f.Close()
 
-	leafList := utils.TextToLeafs(f)
+	nodeList := utils.TextToLeafs(f)
 
-	tree.CreateHuffmanTree(&leafList)
+	tree.CreateHuffmanTree(&nodeList)
+
+	//fmt.Println(nodeList.PopFirst())
+	huffmanTree, _ := nodeList.PopFirst()
+	cm := make(map[rune]string)
+	tree.IndexFromTree(huffmanTree, "", &cm)
+
+	fmt.Println(cm)
 
 }

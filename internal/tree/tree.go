@@ -18,6 +18,9 @@ type InternalNode struct {
 
 type NodeList []BaseNode
 
+/*
+Method for that implement a stack pop feature to array of nodes
+*/
 func (nl *NodeList) PopFirst() (BaseNode, bool) {
 	if len(*nl) == 0 {
 		return nil, false
@@ -38,7 +41,7 @@ func (n LeafNode) Weight() int {
 }
 
 func (n InternalNode) IsLeaf() bool {
-	return true
+	return false
 }
 
 func (n InternalNode) Weight() int {
