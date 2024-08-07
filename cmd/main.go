@@ -5,6 +5,7 @@ import (
 	"os"
 	"path"
 
+	"github.com.Juanmagc99.huffman-compressor/internal/filemanager"
 	"github.com.Juanmagc99.huffman-compressor/internal/tree"
 	"github.com.Juanmagc99.huffman-compressor/internal/utils"
 )
@@ -32,6 +33,6 @@ func main() {
 	cm := make(map[rune]string)
 	tree.IndexFromTree(huffmanTree, "", &cm)
 
-	fmt.Println(cm)
+	filemanager.WriteInFile(cm, "internal/testdata/test_create.txt")
 
 }
