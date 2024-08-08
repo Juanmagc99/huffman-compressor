@@ -19,10 +19,10 @@ func WriteInFile(codeMap *map[rune]string, f *os.File) {
 	}
 	s = s[0:len(s)-1] + "\n"
 
-	fmt.Println(strings.Split(f.Name(), ".")[0] + ".hoff")
-
 	fNew, err := os.Create(strings.Split(f.Name(), ".")[0] + ".hoff")
 	utils.CheckError("Something went wrong during file creation", err)
+
+	defer fNew.Close()
 
 	WriteBits(s, true, fNew)
 
@@ -31,8 +31,12 @@ func WriteInFile(codeMap *map[rune]string, f *os.File) {
 
 	for scanner.Scan() {
 		cr := []rune(scanner.Text())[0]
-		if len(et) >= 8 {
-			WriteBits(et, false, fNew)
+		if len(et) > 8 {
+			WriteBits(et[:8], false, fNew)
+			et = et[8:]
+		} else if len(et) == 8 {
+			WriteBits(et[:8], false, fNew)
+			et = ""
 		} else {
 			et += (*codeMap)[cr]
 		}
@@ -43,6 +47,23 @@ func WriteInFile(codeMap *map[rune]string, f *os.File) {
 	}
 }
 
+/*
+Receive a string with text and write it as the header directly if it is the map of codes
+or transform strings of codes(len = 8) and push it as binary into a byte
+*/
 func WriteBits(text string, isHeader bool, f *os.File) {
-	f.WriteString(text)
+	if isHeader {
+		_, err := f.Write([]byte(text))
+		utils.CheckError("Error writing header", err)
+	} else {
+		bValue := byte(0b0000000)
+		for i, b := range text {
+			if b == '1' {
+				bValue |= (1 << (7 - i)) // OR logic with index of shift inverted (Little endian is set by default)
+			}
+		}
+		_, err := f.Write([]byte{bValue})
+		utils.CheckError("Error writing encode content", err)
+	}
+
 }
