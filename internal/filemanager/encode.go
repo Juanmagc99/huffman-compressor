@@ -31,15 +31,17 @@ func WriteInFile(codeMap *map[rune]string, f *os.File) {
 
 	for scanner.Scan() {
 		cr := []rune(scanner.Text())[0]
-		if len(et) > 8 {
+		et += (*codeMap)[cr]
+
+		if len(et) >= 8 {
 			WriteBits(et[:8], false, fNew)
 			et = et[8:]
-		} else if len(et) == 8 {
-			WriteBits(et[:8], false, fNew)
-			et = ""
-		} else {
-			et += (*codeMap)[cr]
 		}
+	}
+
+	if len(et) > 0 {
+		et += strings.Repeat("0", 8-len(et))
+		WriteBits(et, false, fNew)
 	}
 
 	if err := scanner.Err(); err != nil {
