@@ -12,9 +12,9 @@ import (
 This function receive a txt file and return a list of leaf with its runes
 and their frecuency
 */
-func TextToLeafs(file *os.File) tree.NodeList {
+func TextToLeafs(f *os.File) tree.NodeList {
 
-	scanner := bufio.NewScanner(file)
+	scanner := bufio.NewScanner(f)
 	scanner.Split(bufio.ScanRunes)
 
 	cm := make(map[rune]int)
@@ -26,6 +26,10 @@ func TextToLeafs(file *os.File) tree.NodeList {
 	if err := scanner.Err(); err != nil {
 		CheckError("Some problems scanning the file", err)
 	}
+
+	//Point to the start of the file so its possible to scan it again
+	_, err := f.Seek(0, 0)
+	CheckError("Problem pointing to start of file", err)
 
 	var nl tree.NodeList
 

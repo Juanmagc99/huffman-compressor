@@ -33,6 +33,6 @@ func main() {
 	cm := make(map[rune]string)
 	tree.IndexFromTree(huffmanTree, "", &cm)
 
-	filemanager.WriteInFile(cm, "internal/testdata/test_create.txt")
+	filemanager.WriteInFile(&cm, f)
 
 }
