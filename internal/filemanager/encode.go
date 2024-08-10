@@ -9,7 +9,10 @@ import (
 	"github.com.Juanmagc99.huffman-compressor/internal/utils"
 )
 
-func WriteInFile(codeMap *map[rune]string, f *os.File) {
+/*
+Receive a file with it's codemap and create a file .hoff with the same name compressed
+*/
+func EncodeFile(codeMap *map[rune]string, f *os.File) {
 
 	var s string
 	var et string
