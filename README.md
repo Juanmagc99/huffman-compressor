@@ -14,4 +14,4 @@ This project is an implementation of a file compressor and decompressor based on
 1) Compress
    `go run ./cmd/main.go -c /path/to/file.txt`
 2) Decompress
-   `go run ./cmd/main.go -d /path/to/file.hoff`
+   `go run ./cmd/main.go -d /path/to/file.huff`
