@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"path"
@@ -12,34 +13,56 @@ import (
 
 func main() {
 
-	filePath := "internal/testdata/test.txt"
-	filePathCompress := "internal/testdata/test.hoff"
+	compressFlag := flag.String("c", "", "File path to compress")
+	decompressFlag := flag.String("d", "", "File path to decompress")
 
-	if ext := path.Ext(filePath); ext != ".txt" {
-		err := fmt.Errorf("program expects a .txt file extension not %s", ext)
-		utils.CheckError("Problems with file extension", err)
+	flag.Parse()
+
+	if *compressFlag != "" {
+		filePath := *compressFlag
+
+		if ext := path.Ext(filePath); ext != ".txt" {
+			err := fmt.Errorf("program expects a .txt file extension not %s", ext)
+			utils.CheckError("Problems with file extension", err)
+		}
+
+		f, err := os.Open(filePath)
+
+		utils.CheckError("Something went wrong during file open", err)
+		defer f.Close()
+
+		nodeList := utils.TextToLeafs(f)
+
+		tree.CreateHuffmanTree(&nodeList)
+
+		huffmanTree, _ := nodeList.PopFirst()
+		cm := make(map[rune]string)
+		tree.IndexFromTree(huffmanTree, "", &cm)
+
+		filemanager.EncodeFile(&cm, f)
+		fmt.Println("File compressed successfully")
 	}
 
-	f, err := os.Open(filePath)
+	if *decompressFlag != "" {
+		filePath := *decompressFlag
 
-	utils.CheckError("Something went wrong during file open", err)
-	defer f.Close()
+		if ext := path.Ext(filePath); ext != ".hoff" {
+			err := fmt.Errorf("program expects a .hoff file extension not %s", ext)
+			utils.CheckError("Problems with file extension", err)
+		}
 
-	nodeList := utils.TextToLeafs(f)
+		f, err := os.Open(filePath)
 
-	tree.CreateHuffmanTree(&nodeList)
+		utils.CheckError("Something went wrong during file open", err)
+		defer f.Close()
 
-	huffmanTree, _ := nodeList.PopFirst()
-	cm := make(map[rune]string)
-	tree.IndexFromTree(huffmanTree, "", &cm)
+		filemanager.DecodeFile(f)
+		fmt.Println("File decompressed successfully")
+	}
 
-	filemanager.EncodeFile(&cm, f)
-
-	f, err = os.Open(filePathCompress)
-
-	utils.CheckError("Something went wrong during file open", err)
-	defer f.Close()
-
-	filemanager.DecodeFile(f)
+	if *compressFlag == "" && *decompressFlag == "" {
+		fmt.Println("Please specify either -c (compress) or -d (decompress) with a file path.")
+		flag.Usage()
+	}
 
 }
