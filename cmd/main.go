@@ -12,8 +12,8 @@ import (
 
 func main() {
 
-	filePath := "internal/testdata/lorem_data.txt"
-	filePathCompress := "internal/testdata/lorem_data.hoff"
+	filePath := "internal/testdata/test.txt"
+	filePathCompress := "internal/testdata/test.hoff"
 
 	if ext := path.Ext(filePath); ext != ".txt" {
 		err := fmt.Errorf("program expects a .txt file extension not %s", ext)
