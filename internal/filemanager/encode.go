@@ -22,7 +22,7 @@ func EncodeFile(codeMap *map[rune]string, f *os.File) {
 	}
 	s = s[0:len(s)-1] + "\n"
 
-	fNew, err := os.Create(strings.Split(f.Name(), ".")[0] + ".hoff")
+	fNew, err := os.Create(strings.Split(f.Name(), ".")[0] + ".huff")
 	utils.CheckError("Something went wrong during file creation", err)
 
 	defer fNew.Close()

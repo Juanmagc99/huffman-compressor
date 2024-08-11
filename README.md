@@ -1,6 +1,6 @@
 # Huffman Compressor
 
-This project is an implementation of a file compressor and decompressor based on the Huffman algorithm. It allows you to compress text files (`.txt`) into a compressed format (`.hoff`) and then decompress them back.
+This project is an implementation of a file compressor and decompressor based on the Huffman algorithm. It allows you to compress text files (`.txt`) into a compressed format (`.huff`) and then decompress them back.
 
 ## Project Structure
 

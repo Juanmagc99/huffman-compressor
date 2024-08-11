@@ -46,7 +46,7 @@ func main() {
 	if *decompressFlag != "" {
 		filePath := *decompressFlag
 
-		if ext := path.Ext(filePath); ext != ".hoff" {
+		if ext := path.Ext(filePath); ext != ".huff" {
 			err := fmt.Errorf("program expects a .hoff file extension not %s", ext)
 			utils.CheckError("Problems with file extension", err)
 		}
