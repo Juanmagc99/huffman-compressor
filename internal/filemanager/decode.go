@@ -26,25 +26,28 @@ func DecodeFile(f *os.File) {
 
 	for s.Scan() {
 		b := s.Bytes()[0]
-		bStrings += strconv.FormatUint(uint64(b), 2)
+		bStrings += fmt.Sprintf("%08b", b)
 		WriteOnFile(&bStrings, cm, fNew)
 	}
 
 }
 
 func WriteOnFile(s *string, cm map[string]rune, f *os.File) {
-
-	length := len(*s)
-
-	for i := 1; i <= length; i++ {
-		if v, exists := cm[(*s)[:i]]; exists {
-			fmt.Println(string(v))
-			f.WriteString(string(v))
-			*s = (*s)[i:length]
-			length = len(*s)
+	for len(*s) > 0 {
+		length := len(*s)
+		isMatch := false
+		for i := 1; i <= length; i++ {
+			if v, exists := cm[(*s)[:i]]; exists {
+				f.WriteString(string(v))
+				*s = (*s)[i:length]
+				isMatch = true
+				break
+			}
+		}
+		if !isMatch {
+			break
 		}
 	}
-
 }
 
 func MapFromHeader(s *bufio.Scanner) map[string]rune {

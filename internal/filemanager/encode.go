@@ -15,7 +15,7 @@ Receive a file with it's codemap and create a file .hoff with the same name comp
 func EncodeFile(codeMap *map[rune]string, f *os.File) {
 
 	var s string
-	var et string
+	et := ""
 
 	for k, v := range *codeMap {
 		s += fmt.Sprintf("%d:%s;", k, v)
@@ -43,7 +43,6 @@ func EncodeFile(codeMap *map[rune]string, f *os.File) {
 	}
 
 	if len(et) > 0 {
-		et += strings.Repeat("0", 8-len(et))
 		WriteBits(et, false, fNew)
 	}
 
@@ -61,10 +60,10 @@ func WriteBits(text string, isHeader bool, f *os.File) {
 		_, err := f.Write([]byte(text))
 		utils.CheckError("Error writing header", err)
 	} else {
-		bValue := byte(0b0000000)
+		bValue := byte(0)
 		for i, b := range text {
 			if b == '1' {
-				bValue |= (1 << (7 - i)) // OR logic with index of shift inverted (Little endian is set by default)
+				bValue |= (1 << (7 - i))
 			}
 		}
 		_, err := f.Write([]byte{bValue})
